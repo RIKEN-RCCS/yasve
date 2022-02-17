@@ -43,28 +43,33 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-/* MEMO: This avoids libraries including pthread, stdio, malloc,
-   assert, etc., when used with "runsa".  See for the comments in
-   "preloader.c". */
+/* This file includes files "action.c" and "insn.c" in the middle of
+   the file.  They are included after sufficient
+   declarations/definitions become visible. */
+
+/* MEMO: This library avoids using standard libraries including
+   pthread, stdio, malloc, assert, etc., for the use with "runstatic".
+   See for the comments in "preloader.c". */
 
 /* MEMO: This works only with little-endian.  The overlapping of
    elements in a vector forces the layout of the structure
    representation (See the zreg type definition). */
 
-/* MEMO: The most interim values are held as u64 in this
+/* MEMO: The most interim values are held as s64/u64 in this
    implementation, while they are held with the exact width in the
-   pseduocode definition.  It assumes u64 is the largest type.
+   pseduocode definition.  It assumes s64/u64 is the largest type.
    Especially, it sign-extends values to 64 bits immediately after
    accessing from memory.  It is because holding values with the exact
    width is tedious in C. */
 
-/* MEMO: PTRUE/PFALSE ignores the PL (use the longest 256). */
+/* MEMO: PTRUE/PFALSE ignores the PL (predicate-length).  It uses the
+   longest 256. */
 
 /* MEMO: The behavior of CheckAlignment() is diffent.  It aborts at
    the call site. */
 
-/* MEMO (similar insns): (1) INDEX takes a scalar as a base, but ADR
-   takes a vector.  (2) Similarly, CPY takes a scalar, but DUP takes a
+/* MEMO ON INSN SIMILARITY: (1) INDEX takes a scalar as a base, but
+   ADR takes a vector.  (2) CPY takes a scalar, but DUP takes a
    vector.  (3) COMPACT selects and packs active elements and leaves
    zeros.  SPLICE selects consecutive elements and fills the space by
    the elements of another vector.  SEL selects the elements from two

@@ -614,28 +614,26 @@ static int F_OD(int x) {return 0;}
    means the width is defined as the operand size. */
 
 typedef enum {
-    OPR_R64_IMM,
-    OPR_R64_REG_LSL0,
-    OPR_R64_REG_LSL1,
-    OPR_R64_REG_LSL2,
-    OPR_R64_REG_LSL3,
-    OPR_Z32_REG_XS14_LSL0,
-    OPR_Z32_REG_XS14_LSL1,
-    OPR_Z32_REG_XS14_LSL2,
-    OPR_Z32_REG_XS14_LSL3,
-    OPR_Z32_REG_XS22_LSL0,
-    OPR_Z32_REG_XS22_LSL1,
-    OPR_Z32_REG_XS22_LSL2,
-    OPR_Z32_REG_XS22_LSL3,
-    OPR_Z64_IMM,
-    OPR_Z64_REG_XS22_LSL0,
-    OPR_Z64_REG_XS22_LSL1,
-    OPR_Z64_REG_XS22_LSL2,
-    OPR_Z64_REG_XS22_LSL3,
-    OPR_ZSV_IMM,
-    OPR_ZSV_RSV_MSZ,
-    OPR_ZSV_ZSV_MSZ,
-    OPR_ZSV_ZSV_MSZ_LSL
+    OPR_Rn_IMM,
+    OPR_Rn_Rm_LSL0,
+    OPR_Rn_Rm_LSL1,
+    OPR_Rn_Rm_LSL2,
+    OPR_Rn_Rm_LSL3,
+    OPR_Rn_Zm32_XS14_LSL0,
+    OPR_Rn_Zm32_XS14_LSL1,
+    OPR_Rn_Zm32_XS14_LSL2,
+    OPR_Rn_Zm32_XS14_LSL3,
+    OPR_Rn_Zm32_XS22_LSL0,
+    OPR_Rn_Zm32_XS22_LSL1,
+    OPR_Rn_Zm32_XS22_LSL2,
+    OPR_Rn_Zm32_XS22_LSL3,
+    OPR_Rn_Zm64_XS22_LSL0,
+    OPR_Rn_Zm64_XS22_LSL1,
+    OPR_Rn_Zm64_XS22_LSL2,
+    OPR_Rn_Zm64_XS22_LSL3,
+    OPR_ZnSS_IMM,
+    OPR_ZnSS_Zm32_MSZ,
+    OPR_ZnSS_ZmSS_MSZ_LSL
 } svemo_t;
 
 #define opr_sh13(opc) ((opc >> 13) & 0x1)
@@ -675,44 +673,44 @@ typedef enum {
    reg_width indicates the width of the next register.
    reg_or_imm_marker indicates the next operand is Reg or Imm. */
 
-#define SVE_ADDR_RI_S4x16   OPR_R64_IMM, Rn, opr_simm4, 0, 0
+#define SVE_ADDR_RI_S4x16   OPR_Rn_IMM, Rn, opr_simm4, 0, 0
 #define SVE_ADDR_RI_S4x2xVL SVE_ADDR_RI_S4xVL /*ld2/st2*/
 #define SVE_ADDR_RI_S4x3xVL SVE_ADDR_RI_S4xVL /*ld3/st3*/
 #define SVE_ADDR_RI_S4x4xVL SVE_ADDR_RI_S4xVL /*ld4/st4*/
-#define SVE_ADDR_RI_S4xVL   OPR_R64_IMM, Rn, opr_simm4, 0, 0
-#define SVE_ADDR_RI_S6xVL   OPR_R64_IMM, Rn, opr_simm6_at16, 0, 0
-#define SVE_ADDR_RI_S9xVL   OPR_R64_IMM, Rn, (int)opr_simm9, 0, 0
-#define SVE_ADDR_RI_U6      OPR_R64_IMM, Rn, opr_uimm6, 0, 0
+#define SVE_ADDR_RI_S4xVL   OPR_Rn_IMM, Rn, opr_simm4, 0, 0
+#define SVE_ADDR_RI_S6xVL   OPR_Rn_IMM, Rn, opr_simm6_at16, 0, 0
+#define SVE_ADDR_RI_S9xVL   OPR_Rn_IMM, Rn, opr_simm9, 0, 0
+#define SVE_ADDR_RI_U6      OPR_Rn_IMM, Rn, opr_uimm6, 0, 0
 #define SVE_ADDR_RI_U6x2    SVE_ADDR_RI_U6
 #define SVE_ADDR_RI_U6x4    SVE_ADDR_RI_U6
 #define SVE_ADDR_RI_U6x8    SVE_ADDR_RI_U6
-#define SVE_ADDR_RR         OPR_R64_REG_LSL0, Rn, Rm, 0, 0
-#define SVE_ADDR_RR_LSL1    OPR_R64_REG_LSL1, Rn, Rm, 0, 1
-#define SVE_ADDR_RR_LSL2    OPR_R64_REG_LSL2, Rn, Rm, 0, 2
-#define SVE_ADDR_RR_LSL3    OPR_R64_REG_LSL3, Rn, Rm, 0, 3
-#define SVE_ADDR_RX         OPR_R64_REG_LSL0, Rn, Rm, 0, 0
-#define SVE_ADDR_RX_LSL1    OPR_R64_REG_LSL1, Rn, Rm, 0, 1
-#define SVE_ADDR_RX_LSL2    OPR_R64_REG_LSL2, Rn, Rm, 0, 2
-#define SVE_ADDR_RX_LSL3    OPR_R64_REG_LSL3, Rn, Rm, 0, 3
-#define SVE_ADDR_RZ         OPR_Z64_REG_XS22_LSL0, SVE_Zm_16, Rn, opr_xs22, 0
-#define SVE_ADDR_RZ_LSL1    OPR_Z64_REG_XS22_LSL1, SVE_Zm_16, Rn, opr_xs22, 1
-#define SVE_ADDR_RZ_LSL2    OPR_Z64_REG_XS22_LSL2, SVE_Zm_16, Rn, opr_xs22, 2
-#define SVE_ADDR_RZ_LSL3    OPR_Z64_REG_XS22_LSL3, SVE_Zm_16, Rn, opr_xs22, 3
-#define SVE_ADDR_RZ_XTW1_14 OPR_Z32_REG_XS14_LSL1, SVE_Zm_16, Rn, opr_xs14, 1
-#define SVE_ADDR_RZ_XTW1_22 OPR_Z32_REG_XS22_LSL1, SVE_Zm_16, Rn, opr_xs22, 1
-#define SVE_ADDR_RZ_XTW2_14 OPR_Z32_REG_XS14_LSL2, SVE_Zm_16, Rn, opr_xs14, 2
-#define SVE_ADDR_RZ_XTW2_22 OPR_Z32_REG_XS22_LSL2, SVE_Zm_16, Rn, opr_xs22, 2
-#define SVE_ADDR_RZ_XTW3_14 OPR_Z32_REG_XS14_LSL3, SVE_Zm_16, Rn, opr_xs14, 3
-#define SVE_ADDR_RZ_XTW3_22 OPR_Z32_REG_XS22_LSL3, SVE_Zm_16, Rn, opr_xs22, 3
-#define SVE_ADDR_RZ_XTW_14  OPR_Z32_REG_XS14_LSL0, SVE_Zm_16, Rn, opr_xs14, 0
-#define SVE_ADDR_RZ_XTW_22  OPR_Z32_REG_XS22_LSL0, SVE_Zm_16, Rn, opr_xs22, 0
-#define SVE_ADDR_ZI_U5      OPR_ZSV_IMM, SVE_Zn, opr_uimm5, 0, 0
+#define SVE_ADDR_RR         OPR_Rn_Rm_LSL0, Rn, Rm, 0, 0
+#define SVE_ADDR_RR_LSL1    OPR_Rn_Rm_LSL1, Rn, Rm, 0, 1
+#define SVE_ADDR_RR_LSL2    OPR_Rn_Rm_LSL2, Rn, Rm, 0, 2
+#define SVE_ADDR_RR_LSL3    OPR_Rn_Rm_LSL3, Rn, Rm, 0, 3
+#define SVE_ADDR_RX         OPR_Rn_Rm_LSL0, Rn, Rm, 0, 0
+#define SVE_ADDR_RX_LSL1    OPR_Rn_Rm_LSL1, Rn, Rm, 0, 1
+#define SVE_ADDR_RX_LSL2    OPR_Rn_Rm_LSL2, Rn, Rm, 0, 2
+#define SVE_ADDR_RX_LSL3    OPR_Rn_Rm_LSL3, Rn, Rm, 0, 3
+#define SVE_ADDR_RZ         OPR_Rn_Zm64_XS22_LSL0, Rn, SVE_Zm_16, opr_xs22, 0
+#define SVE_ADDR_RZ_LSL1    OPR_Rn_Zm64_XS22_LSL1, Rn, SVE_Zm_16, opr_xs22, 1
+#define SVE_ADDR_RZ_LSL2    OPR_Rn_Zm64_XS22_LSL2, Rn, SVE_Zm_16, opr_xs22, 2
+#define SVE_ADDR_RZ_LSL3    OPR_Rn_Zm64_XS22_LSL3, Rn, SVE_Zm_16, opr_xs22, 3
+#define SVE_ADDR_RZ_XTW1_14 OPR_Rn_Zm32_XS14_LSL1, Rn, SVE_Zm_16, opr_xs14, 1
+#define SVE_ADDR_RZ_XTW1_22 OPR_Rn_Zm32_XS22_LSL1, Rn, SVE_Zm_16, opr_xs22, 1
+#define SVE_ADDR_RZ_XTW2_14 OPR_Rn_Zm32_XS14_LSL2, Rn, SVE_Zm_16, opr_xs14, 2
+#define SVE_ADDR_RZ_XTW2_22 OPR_Rn_Zm32_XS22_LSL2, Rn, SVE_Zm_16, opr_xs22, 2
+#define SVE_ADDR_RZ_XTW3_14 OPR_Rn_Zm32_XS14_LSL3, Rn, SVE_Zm_16, opr_xs14, 3
+#define SVE_ADDR_RZ_XTW3_22 OPR_Rn_Zm32_XS22_LSL3, Rn, SVE_Zm_16, opr_xs22, 3
+#define SVE_ADDR_RZ_XTW_14  OPR_Rn_Zm32_XS14_LSL0, Rn, SVE_Zm_16, opr_xs14, 0
+#define SVE_ADDR_RZ_XTW_22  OPR_Rn_Zm32_XS22_LSL0, Rn, SVE_Zm_16, opr_xs22, 0
+#define SVE_ADDR_ZI_U5      OPR_ZnSS_IMM, SVE_Zn, opr_uimm5, 0, 0
 #define SVE_ADDR_ZI_U5x2    SVE_ADDR_ZI_U5
 #define SVE_ADDR_ZI_U5x4    SVE_ADDR_ZI_U5
 #define SVE_ADDR_ZI_U5x8    SVE_ADDR_ZI_U5
-#define SVE_ADDR_ZZ_LSL     OPR_ZSV_ZSV_MSZ_LSL, SVE_Zm_16, SVE_Zn, opr_msz, opr_sz22
-#define SVE_ADDR_ZZ_SXTW    OPR_ZSV_RSV_MSZ, SVE_Zm_16, SVE_Zn, opr_msz, 0
-#define SVE_ADDR_ZZ_UXTW    OPR_ZSV_RSV_MSZ, SVE_Zm_16, SVE_Zn, opr_msz, 0
+#define SVE_ADDR_ZZ_LSL     OPR_ZnSS_ZmSS_MSZ_LSL, SVE_Zn, SVE_Zm_16, opr_msz, opr_sz22
+#define SVE_ADDR_ZZ_SXTW    OPR_ZnSS_Zm32_MSZ, SVE_Zn, SVE_Zm_16, opr_msz, 0
+#define SVE_ADDR_ZZ_UXTW    OPR_ZnSS_Zm32_MSZ, SVE_Zn, SVE_Zm_16, opr_msz, 0
 
 /* "SVE_ADDR_R" appears in entries with the same opcode as SVE_ADDR_RR
    and SVE_ADDR_RR_LSL1/2/3.  Thus, they are not used in switching the

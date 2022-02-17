@@ -3712,9 +3712,9 @@ static inline void yasve_addvl_0x04205000 (CTXARG, int Rd, int Rn, s64 imm) {
 }
 static inline void yasve_adr_0x0420a000 (CTXARG, int Zd, svemo_t mo, int Zm, int Zn, int msz, int _0) {
     /* (Unpacked 32-bit signed offsets) */
-    /* SVE_ADDR_ZZ_SXTW */
+    /* SVE_ADDR_ZZ_SXTW=(Zn, Zm/32, opr_msz, 0) */
+    assert(mo == OPR_ZnSS_Zm32_MSZ);
     NOTTESTED();
-    assert(mo == OPR_ZSV_RSV_MSZ);
     int esize = 64;
     int osize = 32;
     bool unsignedp = false;
@@ -3723,9 +3723,9 @@ static inline void yasve_adr_0x0420a000 (CTXARG, int Zd, svemo_t mo, int Zm, int
 }
 static inline void yasve_adr_0x0460a000 (CTXARG, int Zd, svemo_t mo, int Zm, int Zn, int msz, int _0) {
     /* (Unpacked 32-bit unsigned offsets) */
-    /* SVE_ADDR_ZZ_UXTW */
+    /* SVE_ADDR_ZZ_UXTW=(Zn, Zm/32, opr_msz, 0) */
+    assert(mo == OPR_ZnSS_Zm32_MSZ);
     NOTTESTED();
-    assert(mo == OPR_ZSV_RSV_MSZ);
     int esize = 64;
     int osize = 32;
     bool unsignedp = true;
@@ -3734,9 +3734,9 @@ static inline void yasve_adr_0x0460a000 (CTXARG, int Zd, svemo_t mo, int Zm, int
 }
 static inline void yasve_adr_0x04a0a000 (CTXARG, int Zd, svemo_t mo, int Zm, int Zn, int msz, int _sz) {
     /* (Packed offsets) */
-    /* SVE_ADDR_ZZ_LSL */
+    /* SVE_ADDR_ZZ_LSL=(Zn, Zm, opr_msz, opr_sz22) */
+    assert(mo == OPR_ZnSS_ZmSS_MSZ_LSL);
     NOTTESTED();
-    assert(mo == OPR_ZSV_ZSV_MSZ_LSL);
     int esize = (32 << sz);
     int osize = esize;
     bool unsignedp = true;
@@ -5241,9 +5241,9 @@ static inline void yasve_lastb_0x05238000 (CTXARG, int Vd, int Pg, int Zn) {
 
 static inline void yasve_ld1b_0xa4004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/8-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int msize = 8;
     bool unsignedp = true;
@@ -5251,19 +5251,19 @@ static inline void yasve_ld1b_0xa4004000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa400a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/8-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 8;
     int msize = 8;
     bool unsignedp = true;
     perform_LD1_x_imm(zx, esize, msize, unsignedp, Zt, Rn, imm, Pg);
 }
-static inline void yasve_ld1b_0xc4004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_ld1b_0xc4004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW_22=(Zm/32, Rn, opr_xs22, 0) */
+    /* operand: SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -5274,11 +5274,11 @@ static inline void yasve_ld1b_0xc4004000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1b_0xc440c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_ld1b_0xc440c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* oprand: SVE_ADDR_RZ=(Zm, Rn, opr_xs22, 0) */
+    /* operand: SVE_ADDR_RZ=(Rn, Zm, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -5291,9 +5291,9 @@ static inline void yasve_ld1b_0xc440c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xc420c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* oprand: SVE_ADDR_ZI_U5=(SVE_Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_Z64_IMM);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -5301,9 +5301,9 @@ static inline void yasve_ld1b_0xc420c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa4604000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -5311,9 +5311,9 @@ static inline void yasve_ld1b_0xa4604000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa460a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -5321,9 +5321,9 @@ static inline void yasve_ld1b_0xa460a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa4204000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 16;
     int msize = 8;
     bool unsignedp = true;
@@ -5331,19 +5331,19 @@ static inline void yasve_ld1b_0xa4204000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa420a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/16-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 16;
     int msize = 8;
     bool unsignedp = true;
     perform_LD1_x_imm(zx, esize, msize, unsignedp, Zt, Rn, imm, Pg);
 }
-static inline void yasve_ld1b_0x84004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _0) {
+static inline void yasve_ld1b_0x84004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _0) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW_22=(Zm/32, Rn, opr_xs22, 0) */
+    /* operand: SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = true;
@@ -5356,9 +5356,9 @@ static inline void yasve_ld1b_0x84004000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0x8420c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _0) {
     /* (vector plus immediate/32-bit element) */
-    /* oprand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 8;
     bool unsignedp = true;
@@ -5366,9 +5366,9 @@ static inline void yasve_ld1b_0x8420c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa4404000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = true;
@@ -5376,20 +5376,20 @@ static inline void yasve_ld1b_0xa4404000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1b_0xa440a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 32;
     int msize = 8;
     bool unsignedp = true;
     perform_LD1_x_imm(zx, esize, msize, unsignedp, Zt, Rn, imm, Pg);
 }
 
-static inline void yasve_ld1h_0xc4804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1h_0xc4804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW_22=(Zm/32, Rn, opr_xs22, LSL=0) */
+    /* operand: SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -5400,11 +5400,11 @@ static inline void yasve_ld1h_0xc4804000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1h_0xc4a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1h_0xc4a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW1_22=(Zm_16/32, Rn, opr_xs22, LSL=1) */
+    /* operand: SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 63;
     int msize = 16;
     bool unsignedp = true;
@@ -5415,11 +5415,11 @@ static inline void yasve_ld1h_0xc4a04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1h_0xc4c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1h_0xc4c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* oprand: SVE_ADDR_RZ=(Zm_16/64, Rn, opr_xs22, LSL=0) */
+    /* operand: SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -5430,11 +5430,11 @@ static inline void yasve_ld1h_0xc4c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1h_0xc4e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1h_0xc4e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* oprand: SVE_ADDR_RZ_LSL1=(Zm_16/64, Rn, opr_xs22, LSL=1) */
+    /* operand: SVE_ADDR_RZ_LSL1=(Rn, Zm/64, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -5447,9 +5447,9 @@ static inline void yasve_ld1h_0xc4e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xc4a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int lsl) {
     /* (vector plus immediate/64-bit element) */
-    /* oprand: SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -5457,9 +5457,9 @@ static inline void yasve_ld1h_0xc4a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xa4e04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* oprand: SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    /* operand: SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -5467,9 +5467,9 @@ static inline void yasve_ld1h_0xa4e04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xa4e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -5477,9 +5477,9 @@ static inline void yasve_ld1h_0xa4e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xa4a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* oprand: SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    /* operand: SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     //NOTTESTED00();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int msize = 16;
     bool unsignedp = true;
@@ -5487,19 +5487,19 @@ static inline void yasve_ld1h_0xa4a04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xa4a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/16-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 16;
     int msize = 16;
     bool unsignedp = true;
     perform_LD1_x_imm(zx, esize, msize, unsignedp, Zt, Rn, imm, Pg);
 }
-static inline void yasve_ld1h_0x84804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1h_0x84804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW_22=(Zm/32, Rn, opr_xs22, LSL=0) */
+    /* operand: SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -5510,11 +5510,11 @@ static inline void yasve_ld1h_0x84804000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1h_0x84a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1h_0x84a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW1_22=(Zm_16/32, Rn, opr_xs22, LSL=1) */
+    /* operand: SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -5527,9 +5527,9 @@ static inline void yasve_ld1h_0x84a04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0x84a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int lsl) {
     /* (vector plus immediate/32-bit element) */
-    /* oprand: SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -5537,9 +5537,9 @@ static inline void yasve_ld1h_0x84a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xa4c04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* oprand: SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    /* operand: SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -5547,20 +5547,20 @@ static inline void yasve_ld1h_0xa4c04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1h_0xa4c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
     perform_LD1_x_imm(zx, esize, msize, unsignedp, Zt, Rn, imm, Pg);
 }
 
-static inline void yasve_ld1d_0xc5804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1d_0xc5804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW_22=(Zm/32, Rn, opr_xs22, LSL=0) */
+    /* operand: SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -5571,11 +5571,11 @@ static inline void yasve_ld1d_0xc5804000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1d_0xc5a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int lsl) {
+static inline void yasve_ld1d_0xc5a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int lsl) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* oprand: SVE_ADDR_RZ_XTW3_22=(Zm/32, Rn, opr_xs22, LSL=3) */
+    /* operand: SVE_ADDR_RZ_XTW3_22=(Rn, Zm/32, opr_xs22, LSL=3) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL3);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL3);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -5586,11 +5586,11 @@ static inline void yasve_ld1d_0xc5a04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1d_0xc5c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int _0, int lsl) {
+static inline void yasve_ld1d_0xc5c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int lsl) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* oprand: SVE_ADDR_RZ=(Zm_16/64, Rn, opr_xs22, LSL=0) */
+    /* operand: SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     //NOTTESTED21();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -5601,11 +5601,11 @@ static inline void yasve_ld1d_0xc5c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1d_0xc5e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int _0, int lsl) {
+static inline void yasve_ld1d_0xc5e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int lsl) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* oprand: SVE_ADDR_RZ_LSL3=(Zm/64, Rn, opr_xs22, LSL=3) */
+    /* operand: SVE_ADDR_RZ_LSL3=(Rn, Zm/64, opr_xs22, LSL=3) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL3);
     //NOTTESTED00();
-    assert(mo == OPR_Z64_REG_XS22_LSL3);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -5618,9 +5618,9 @@ static inline void yasve_ld1d_0xc5e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1d_0xc5a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int lsl) {
     /* (vector plus immediate) */
-    /* oprand: SVE_ADDR_ZI_U5x8=(Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5x8=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -5628,9 +5628,9 @@ static inline void yasve_ld1d_0xc5a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1d_0xa5e04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int lsl) {
     /* (scalar plus scalar) */
-    /* oprand: SVE_ADDR_RX_LSL3=(Rn, Rm, 0, LSL=3) */
+    /* operand: SVE_ADDR_RX_LSL3=(Rn, Rm, 0, LSL=3) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     //NOTTESTED00();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -5638,7 +5638,8 @@ static inline void yasve_ld1d_0xa5e04000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1d_0xa5e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int lsl) {
     /* (scalar plus immediate) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 64;
@@ -5648,9 +5649,9 @@ static inline void yasve_ld1d_0xa5e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld1rb_0x84408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (8-bit element) */
-    /* oprand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 8;
     int msize = 8;
     bool unsignedp = true;
@@ -5658,9 +5659,9 @@ static inline void yasve_ld1rb_0x84408000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1rb_0x8440e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* oprand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -5668,9 +5669,9 @@ static inline void yasve_ld1rb_0x8440e000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1rb_0x8440a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (16-bit element) */
-    /* oprand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 16;
     int msize = 8;
     bool unsignedp = true;
@@ -5678,9 +5679,9 @@ static inline void yasve_ld1rb_0x8440a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1rb_0x8440c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* oprand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 32;
     int msize = 8;
     bool unsignedp = true;
@@ -5688,7 +5689,8 @@ static inline void yasve_ld1rb_0x8440c000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 
 static inline void yasve_ld1rd_0x85c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* oprand: SVE_ADDR_RI_U6x8 */
+    /* operand: SVE_ADDR_RI_U6x8=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     //NOTTESTED18();
     int esize = 64;
     int msize = 64;
@@ -5698,7 +5700,8 @@ static inline void yasve_ld1rd_0x85c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 
 static inline void yasve_ld1rh_0x84c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* oprand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 16;
@@ -5707,7 +5710,8 @@ static inline void yasve_ld1rh_0x84c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1rh_0x84c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (16-bit element) */
-    /* oprand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 16;
@@ -5716,7 +5720,8 @@ static inline void yasve_ld1rh_0x84c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1rh_0x84c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* oprand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    /* operand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 16;
@@ -5735,7 +5740,8 @@ static inline void yasve_ld1rqw_0xa5000000 (TBDARG) {TBD("ld1rqw");}
 
 static inline void yasve_ld1rsb_0x85c08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* operand: SVE_ADDR_RI_U6 */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -5744,7 +5750,8 @@ static inline void yasve_ld1rsb_0x85c08000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ld1rsb_0x85c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (16-bit element) */
-    /* operand: SVE_ADDR_RI_U6 */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 8;
@@ -5753,7 +5760,8 @@ static inline void yasve_ld1rsb_0x85c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ld1rsb_0x85c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* operand: SVE_ADDR_RI_U6 */
+    /* operand: SVE_ADDR_RI_U6=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 8;
@@ -5763,7 +5771,8 @@ static inline void yasve_ld1rsb_0x85c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ld1rsh_0x85408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* operand: SVE_ADDR_RI_U6x2 */
+    /* operand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 16;
@@ -5772,7 +5781,8 @@ static inline void yasve_ld1rsh_0x85408000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ld1rsh_0x8540a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* operand: SVE_ADDR_RI_U6x2 */
+    /* operand: SVE_ADDR_RI_U6x2=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 16;
@@ -5781,7 +5791,8 @@ static inline void yasve_ld1rsh_0x8540a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 
 static inline void yasve_ld1rsw_0x84c08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* operand: SVE_ADDR_RI_U6x4 */
+    /* operand: SVE_ADDR_RI_U6x4=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -5791,7 +5802,8 @@ static inline void yasve_ld1rsw_0x84c08000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ld1rw_0x8540e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* SVE_ADDR_RI_U6x4 */
+    /* SVE_ADDR_RI_U6x4=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -5800,7 +5812,8 @@ static inline void yasve_ld1rw_0x8540e000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1rw_0x8540c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* SVE_ADDR_RI_U6x4 */
+    /* SVE_ADDR_RI_U6x4=(Rn, opr_uimm6, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     //NOTTESTED00();
     int esize = 32;
     int msize = 32;
@@ -5808,11 +5821,11 @@ static inline void yasve_ld1rw_0x8540c000 (CTXARG, int Zt, int Pg, svemo_t mo, i
     perform_LD1R(zx, esize, msize, unsignedp, Zt, Rn, imm, Pg);
 }
 
-static inline void yasve_ld1sb_0xc4000000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_ld1sb_0xc4000000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = false;
@@ -5823,11 +5836,11 @@ static inline void yasve_ld1sb_0xc4000000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_ld1sb_0xc4408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_ld1sb_0xc4408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = false;
@@ -5840,7 +5853,8 @@ static inline void yasve_ld1sb_0xc4408000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xc4208000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5 */
+    /* SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -5849,9 +5863,9 @@ static inline void yasve_ld1sb_0xc4208000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xa5804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = false;
@@ -5859,7 +5873,8 @@ static inline void yasve_ld1sb_0xa5804000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xa580a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -5868,9 +5883,9 @@ static inline void yasve_ld1sb_0xa580a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xa5c04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 16;
     int msize = 8;
     bool unsignedp = false;
@@ -5878,7 +5893,8 @@ static inline void yasve_ld1sb_0xa5c04000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xa5c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/16-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 8;
@@ -5887,9 +5903,9 @@ static inline void yasve_ld1sb_0xa5c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0x84000000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = false;
@@ -5902,7 +5918,8 @@ static inline void yasve_ld1sb_0x84000000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0x84208000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5 */
+    /* SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 8;
@@ -5911,9 +5928,9 @@ static inline void yasve_ld1sb_0x84208000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xa5a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = false;
@@ -5921,7 +5938,8 @@ static inline void yasve_ld1sb_0xa5a04000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sb_0xa5a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 8;
@@ -5931,9 +5949,9 @@ static inline void yasve_ld1sb_0xa5a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 
 static inline void yasve_ld1sh_0xc4800000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -5946,9 +5964,9 @@ static inline void yasve_ld1sh_0xc4800000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0xc4a00000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_22 */
+    /* SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -5962,9 +5980,9 @@ static inline void yasve_ld1sh_0xc4a00000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 static inline void yasve_ld1sh_0xc4c08000 (CTXARG, int Zt, int Pg, svemo_t mo,
 int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -5977,9 +5995,9 @@ int Rn, int Zm, int xs, int _1) {
 }
 static inline void yasve_ld1sh_0xc4e08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL1 */
+    /* SVE_ADDR_RZ_LSL1=(Rn, Zm/64, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -5992,9 +6010,9 @@ static inline void yasve_ld1sh_0xc4e08000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0xc4a08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -6002,9 +6020,9 @@ static inline void yasve_ld1sh_0xc4a08000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0xa5004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -6012,7 +6030,8 @@ static inline void yasve_ld1sh_0xa5004000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0xa500a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 16;
@@ -6021,9 +6040,9 @@ static inline void yasve_ld1sh_0xa500a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0x84800000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 16;
     bool unsignedp = false;
@@ -6036,9 +6055,9 @@ static inline void yasve_ld1sh_0x84800000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0x84a00000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_22 */
+    /* SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 32;
     int msize = 16;
     bool unsignedp = false;
@@ -6051,9 +6070,9 @@ static inline void yasve_ld1sh_0x84a00000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0x84a08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 16;
     bool unsignedp = false;
@@ -6061,9 +6080,9 @@ static inline void yasve_ld1sh_0x84a08000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0xa5204000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 32;
     int msize = 16;
     bool unsignedp = false;
@@ -6071,7 +6090,8 @@ static inline void yasve_ld1sh_0xa5204000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sh_0xa520a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 16;
@@ -6081,9 +6101,9 @@ static inline void yasve_ld1sh_0xa520a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 
 static inline void yasve_ld1sw_0xc5000000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -6096,9 +6116,9 @@ static inline void yasve_ld1sw_0xc5000000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sw_0xc5200000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_22 */
+    /* SVE_ADDR_RZ_XTW2_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -6111,9 +6131,9 @@ static inline void yasve_ld1sw_0xc5200000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sw_0xc5408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -6126,9 +6146,9 @@ static inline void yasve_ld1sw_0xc5408000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sw_0xc5608000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL2 */
+    /* SVE_ADDR_RZ_LSL2=(Rn, Zm/64, opr_xs22, LSL=2) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -6141,9 +6161,9 @@ static inline void yasve_ld1sw_0xc5608000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sw_0xc5208000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -6151,9 +6171,9 @@ static inline void yasve_ld1sw_0xc5208000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sw_0xa4804000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=2) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -6161,7 +6181,8 @@ static inline void yasve_ld1sw_0xa4804000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 }
 static inline void yasve_ld1sw_0xa480a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -6171,9 +6192,9 @@ static inline void yasve_ld1sw_0xa480a000 (CTXARG, int Zt, int Pg, svemo_t mo, i
 
 static inline void yasve_ld1w_0xc5004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -6186,9 +6207,9 @@ static inline void yasve_ld1w_0xc5004000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xc5204000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_22 */
+    /* SVE_ADDR_RZ_XTW2_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -6201,9 +6222,9 @@ static inline void yasve_ld1w_0xc5204000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xc540c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -6216,9 +6237,9 @@ static inline void yasve_ld1w_0xc540c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xc560c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL2 */
+    /* SVE_ADDR_RZ_LSL2=(Rn, Zm/64, opr_xs22, LSL=2) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -6231,9 +6252,9 @@ static inline void yasve_ld1w_0xc560c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xc520c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -6241,9 +6262,9 @@ static inline void yasve_ld1w_0xc520c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xa5604000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -6251,7 +6272,8 @@ static inline void yasve_ld1w_0xa5604000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xa560a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -6260,9 +6282,9 @@ static inline void yasve_ld1w_0xa560a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0x85004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 32;
     bool unsignedp = true;
@@ -6275,9 +6297,9 @@ static inline void yasve_ld1w_0x85004000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0x85204000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_22 */
+    /* SVE_ADDR_RZ_XTW2_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL2);
     //NOTTESTED00();
-    assert(mo == OPR_Z32_REG_XS22_LSL2);
     int esize = 32;
     int msize = 32;
     bool unsignedp = true;
@@ -6290,9 +6312,9 @@ static inline void yasve_ld1w_0x85204000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0x8520c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 32;
     bool unsignedp = true;
@@ -6300,9 +6322,9 @@ static inline void yasve_ld1w_0x8520c000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xa5404000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=2) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     //NOTTESTED00();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int msize = 32;
     bool unsignedp = true;
@@ -6310,7 +6332,8 @@ static inline void yasve_ld1w_0xa5404000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_ld1w_0xa540a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 32;
@@ -6320,16 +6343,17 @@ static inline void yasve_ld1w_0xa540a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld2b_0xa420c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
+    assert(mo == OPR_Rn_Rm_LSL0);
     int esize = 8;
     int nreg = 2;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld2b_0xa420e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     int nreg = 2;
@@ -6338,16 +6362,17 @@ static inline void yasve_ld2b_0xa420e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld2d_0xa5a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, LSL=3) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int nreg = 2;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld2d_0xa5a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int nreg = 2;
@@ -6356,16 +6381,17 @@ static inline void yasve_ld2d_0xa5a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld2h_0xa4a0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int nreg = 2;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld2h_0xa4a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int nreg = 2;
@@ -6374,16 +6400,17 @@ static inline void yasve_ld2h_0xa4a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld2w_0xa520c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=2) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int nreg = 2;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld2w_0xa520e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int nreg = 2;
@@ -6392,16 +6419,17 @@ static inline void yasve_ld2w_0xa520e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld3b_0xa440c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int nreg = 3;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld3b_0xa440e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     int nreg = 3;
@@ -6410,16 +6438,17 @@ static inline void yasve_ld3b_0xa440e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld3d_0xa5c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, LSL=3) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int nreg = 3;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld3d_0xa5c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int nreg = 3;
@@ -6428,16 +6457,17 @@ static inline void yasve_ld3d_0xa5c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld3h_0xa4c0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int nreg = 3;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld3h_0xa4c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int nreg = 3;
@@ -6446,16 +6476,17 @@ static inline void yasve_ld3h_0xa4c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld3w_0xa540c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=2) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int nreg = 3;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld3w_0xa540e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int nreg = 3;
@@ -6464,16 +6495,17 @@ static inline void yasve_ld3w_0xa540e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld4b_0xa460c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int nreg = 4;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld4b_0xa460e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     int nreg = 4;
@@ -6482,16 +6514,17 @@ static inline void yasve_ld4b_0xa460e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld4d_0xa5e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, LSL=3) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int nreg = 4;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld4d_0xa5e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int nreg = 4;
@@ -6500,16 +6533,17 @@ static inline void yasve_ld4d_0xa5e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld4h_0xa4e0c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int nreg = 4;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld4h_0xa4e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int nreg = 4;
@@ -6518,16 +6552,17 @@ static inline void yasve_ld4h_0xa4e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ld4w_0xa560c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=2) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int nreg = 4;
     perform_LD234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ld4w_0xa560e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int nreg = 4;
@@ -6536,9 +6571,9 @@ static inline void yasve_ld4w_0xa560e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_ldff1b_0xa4006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/8-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int msize = 8;
     bool unsignedp = true;
@@ -6546,9 +6581,9 @@ static inline void yasve_ldff1b_0xa4006000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0xc4006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     int offs_size = 32;
@@ -6561,9 +6596,9 @@ static inline void yasve_ldff1b_0xc4006000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0xc440e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     int offs_size = 64;
@@ -6576,7 +6611,8 @@ static inline void yasve_ldff1b_0xc440e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0xc420e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5 */
+    /* SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -6587,9 +6623,9 @@ static inline void yasve_ldff1b_0xc420e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0xa4606000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = true;
@@ -6597,9 +6633,9 @@ static inline void yasve_ldff1b_0xa4606000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0xa4206000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 16;
     int msize = 8;
     bool unsignedp = true;
@@ -6607,9 +6643,9 @@ static inline void yasve_ldff1b_0xa4206000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0x84006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 8;
     int offs_size = 32;
@@ -6622,7 +6658,8 @@ static inline void yasve_ldff1b_0x84006000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0x8420e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5 */
+    /* SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 8;
@@ -6633,9 +6670,9 @@ static inline void yasve_ldff1b_0x8420e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1b_0xa4406000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = true;
@@ -6644,9 +6681,9 @@ static inline void yasve_ldff1b_0xa4406000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ldff1d_0xc5806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 64;
     int offs_size = 32;
@@ -6659,9 +6696,9 @@ static inline void yasve_ldff1d_0xc5806000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1d_0xc5a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW3_22 */
+    /* SVE_ADDR_RZ_XTW3_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL3);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL3);
     int esize = 64;
     int msize = 64;
     int offs_size = 32;
@@ -6674,9 +6711,9 @@ static inline void yasve_ldff1d_0xc5a06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1d_0xc5c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 64;
     int offs_size = 64;
@@ -6689,9 +6726,9 @@ static inline void yasve_ldff1d_0xc5c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1d_0xc5e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL3 */
+    /* SVE_ADDR_RZ_LSL3=(Rn, Zm/64, opr_xs22, LSL=3) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL3);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL3);
     int esize = 64;
     int msize = 64;
     int offs_size = 64;
@@ -6704,9 +6741,9 @@ static inline void yasve_ldff1d_0xc5e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1d_0xc5a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate) */
-    /* SVE_ADDR_ZI_U5x8 */
+    /* SVE_ADDR_ZI_U5x8=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -6716,9 +6753,9 @@ static inline void yasve_ldff1d_0xc5a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1d_0xa5e06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RR_LSL3 */
+    /* SVE_ADDR_RR_LSL3=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int msize = 64;
     bool unsignedp = true;
@@ -6727,9 +6764,9 @@ static inline void yasve_ldff1d_0xa5e06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ldff1h_0xc4806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     int offs_size = 32;
@@ -6742,9 +6779,9 @@ static inline void yasve_ldff1h_0xc4806000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xc4a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_22 */
+    /* SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     int offs_size = 32;
@@ -6757,9 +6794,9 @@ static inline void yasve_ldff1h_0xc4a06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xc4c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     int offs_size = 64;
@@ -6772,9 +6809,9 @@ static inline void yasve_ldff1h_0xc4c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xc4e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL1 */
+    /* SVE_ADDR_RZ_LSL1=(Rn, Zm/64, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     int offs_size = 64;
@@ -6787,9 +6824,9 @@ static inline void yasve_ldff1h_0xc4e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xc4a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -6799,9 +6836,9 @@ static inline void yasve_ldff1h_0xc4a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xa4e06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RR_LSL1 */
+    /* SVE_ADDR_RR_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = true;
@@ -6809,9 +6846,9 @@ static inline void yasve_ldff1h_0xa4e06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xa4a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* SVE_ADDR_RR_LSL1 */
+    /* SVE_ADDR_RR_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int msize = 16;
     bool unsignedp = true;
@@ -6819,9 +6856,9 @@ static inline void yasve_ldff1h_0xa4a06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0x84806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -6834,9 +6871,9 @@ static inline void yasve_ldff1h_0x84806000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0x84a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_22 */
+    /* SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -6849,9 +6886,9 @@ static inline void yasve_ldff1h_0x84a06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0x84a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -6861,9 +6898,9 @@ static inline void yasve_ldff1h_0x84a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1h_0xa4c06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RR_LSL1 */
+    /* SVE_ADDR_RR_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 32;
     int msize = 16;
     bool unsignedp = true;
@@ -6872,9 +6909,9 @@ static inline void yasve_ldff1h_0xa4c06000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ldff1sb_0xc4002000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = false;
@@ -6887,9 +6924,9 @@ static inline void yasve_ldff1sb_0xc4002000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0xc440a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = false;
@@ -6902,7 +6939,8 @@ static inline void yasve_ldff1sb_0xc440a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0xc420a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5 */
+    /* SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -6911,9 +6949,9 @@ static inline void yasve_ldff1sb_0xc420a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0xa5806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 64;
     int msize = 8;
     bool unsignedp = false;
@@ -6921,9 +6959,9 @@ static inline void yasve_ldff1sb_0xa5806000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0xa5c06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 16;
     int msize = 8;
     bool unsignedp = false;
@@ -6931,9 +6969,9 @@ static inline void yasve_ldff1sb_0xa5c06000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0x84002000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = false;
@@ -6946,9 +6984,9 @@ static inline void yasve_ldff1sb_0x84002000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0x8420a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5 */
+    /* SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 8;
     bool unsignedp = false;
@@ -6958,9 +6996,9 @@ static inline void yasve_ldff1sb_0x8420a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sb_0xa5a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RR */
+    /* SVE_ADDR_RR=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 32;
     int msize = 8;
     bool unsignedp = false;
@@ -6969,9 +7007,9 @@ static inline void yasve_ldff1sb_0xa5a06000 (CTXARG, int Zt, int Pg, svemo_t mo,
 
 static inline void yasve_ldff1sh_0xc4802000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     int offs_size = 32;
@@ -6984,9 +7022,9 @@ static inline void yasve_ldff1sh_0xc4802000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0xc4a02000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_22 */
+    /* SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     int offs_size = 32;
@@ -6999,9 +7037,9 @@ static inline void yasve_ldff1sh_0xc4a02000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0xc4c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     int offs_size = 64;
@@ -7014,9 +7052,9 @@ static inline void yasve_ldff1sh_0xc4c0a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0xc4e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL1 */
+    /* SVE_ADDR_RZ_LSL1=(Rn, Zm/64, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     int offs_size = 64;
@@ -7029,9 +7067,9 @@ static inline void yasve_ldff1sh_0xc4e0a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0xc4a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -7041,9 +7079,9 @@ static inline void yasve_ldff1sh_0xc4a0a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0xa5006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RR_LSL1 */
+    /* SVE_ADDR_RR_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 64;
     int msize = 16;
     bool unsignedp = false;
@@ -7051,9 +7089,9 @@ static inline void yasve_ldff1sh_0xa5006000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0x84802000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -7066,9 +7104,9 @@ static inline void yasve_ldff1sh_0x84802000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0x84a02000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_22 */
+    /* SVE_ADDR_RZ_XTW1_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL1);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -7081,9 +7119,9 @@ static inline void yasve_ldff1sh_0x84a02000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0x84a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 16;
     bool unsignedp = false;
@@ -7093,9 +7131,9 @@ static inline void yasve_ldff1sh_0x84a0a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldff1sh_0xa5206000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RR_LSL1 */
+    /* SVE_ADDR_RR_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 32;
     int msize = 16;
     bool unsignedp = false;
@@ -7105,9 +7143,9 @@ static inline void yasve_ldff1sh_0xa5206000 (CTXARG, int Zt, int Pg, svemo_t mo,
 static inline void yasve_ldff1sw_0xc5002000 (CTXARG, int Zt, int Pg, svemo_t mo
 , int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     int offs_size = 32;
@@ -7121,9 +7159,9 @@ static inline void yasve_ldff1sw_0xc5002000 (CTXARG, int Zt, int Pg, svemo_t mo
 static inline void yasve_ldff1sw_0xc5202000 (CTXARG, int Zt, int Pg, svemo_t mo
 , int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_22 */
+    /* SVE_ADDR_RZ_XTW2_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     int offs_size = 32;
@@ -7137,9 +7175,9 @@ static inline void yasve_ldff1sw_0xc5202000 (CTXARG, int Zt, int Pg, svemo_t mo
 static inline void yasve_ldff1sw_0xc540a000 (CTXARG, int Zt, int Pg, svemo_t mo
 , int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     int offs_size = 64;
@@ -7153,9 +7191,9 @@ static inline void yasve_ldff1sw_0xc540a000 (CTXARG, int Zt, int Pg, svemo_t mo
 static inline void yasve_ldff1sw_0xc560a000 (CTXARG, int Zt, int Pg, svemo_t mo
 , int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL2 */
+    /* SVE_ADDR_RZ_LSL2=(Rn, Zm/64, opr_xs22, LSL=2) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     int offs_size = 64;
@@ -7169,9 +7207,9 @@ static inline void yasve_ldff1sw_0xc560a000 (CTXARG, int Zt, int Pg, svemo_t mo
 static inline void yasve_ldff1sw_0xc520a000 (CTXARG, int Zt, int Pg, svemo_t mo
 , int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -7181,9 +7219,9 @@ static inline void yasve_ldff1sw_0xc520a000 (CTXARG, int Zt, int Pg, svemo_t mo
 }
 static inline void yasve_ldff1sw_0xa4806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RR_LSL2 */
+    /* SVE_ADDR_RR_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = false;
@@ -7192,9 +7230,9 @@ static inline void yasve_ldff1sw_0xa4806000 (CTXARG, int Zt, int Pg, svemo_t mo,
 
 static inline void yasve_ldff1w_0xc5006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     int offs_size = 32;
@@ -7207,9 +7245,9 @@ static inline void yasve_ldff1w_0xc5006000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0xc5206000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_22 */
+    /* SVE_ADDR_RZ_XTW2_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     int offs_size = 32;
@@ -7222,9 +7260,9 @@ static inline void yasve_ldff1w_0xc5206000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0xc540e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     int offs_size = 64;
@@ -7237,9 +7275,9 @@ static inline void yasve_ldff1w_0xc540e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0xc560e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL2 */
+    /* SVE_ADDR_RZ_LSL2=(Rn, Zm/64, opr_xs22, LSL=2) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     int offs_size = 64;
@@ -7252,9 +7290,9 @@ static inline void yasve_ldff1w_0xc560e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0xc520e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -7264,9 +7302,9 @@ static inline void yasve_ldff1w_0xc520e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0xa5606000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RR_LSL2 */
+    /* SVE_ADDR_RR_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 64;
     int msize = 32;
     bool unsignedp = true;
@@ -7274,9 +7312,9 @@ static inline void yasve_ldff1w_0xa5606000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0x85006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_22 */
+    /* SVE_ADDR_RZ_XTW_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL0);
     int esize = 32;
     int msize = 32;
     int offs_size = 32;
@@ -7289,9 +7327,9 @@ static inline void yasve_ldff1w_0x85006000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0x85206000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_22 */
+    /* SVE_ADDR_RZ_XTW2_22=(Rn, Zm/32, opr_xs22, 0) */
+    assert(mo == OPR_Rn_Zm32_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS22_LSL2);
     int esize = 32;
     int msize = 32;
     int offs_size = 32;
@@ -7304,9 +7342,9 @@ static inline void yasve_ldff1w_0x85206000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0x8520e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
+    assert(mo == OPR_ZnSS_IMM);
     int esize = 32;
     int msize = 32;
     bool unsignedp = true;
@@ -7316,9 +7354,9 @@ static inline void yasve_ldff1w_0x8520e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldff1w_0xa5406000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RR_LSL2 */
+    /* SVE_ADDR_RR_LSL2=(Rn, Rm, 0, lsl) */
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
+    assert(mo == OPR_Rn_Rm_LSL2);
     int esize = 32;
     int msize = 32;
     bool unsignedp = true;
@@ -7327,7 +7365,8 @@ static inline void yasve_ldff1w_0xa5406000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ldnf1b_0xa410a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (8-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     int msize = 8;
@@ -7337,7 +7376,8 @@ static inline void yasve_ldnf1b_0xa410a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1b_0xa430a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (16-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 8;
@@ -7347,7 +7387,8 @@ static inline void yasve_ldnf1b_0xa430a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1b_0xa450a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 8;
@@ -7357,7 +7398,8 @@ static inline void yasve_ldnf1b_0xa450a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1b_0xa470a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -7367,7 +7409,8 @@ static inline void yasve_ldnf1b_0xa470a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 
 static inline void yasve_ldnf1d_0xa5f0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 64;
@@ -7378,7 +7421,8 @@ static inline void yasve_ldnf1d_0xa5f0a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ldnf1h_0xa4b0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (16-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 16;
@@ -7388,7 +7432,8 @@ static inline void yasve_ldnf1h_0xa4b0a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1h_0xa4d0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 16;
@@ -7398,7 +7443,8 @@ static inline void yasve_ldnf1h_0xa4d0a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1h_0xa4f0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 16;
@@ -7408,7 +7454,8 @@ static inline void yasve_ldnf1h_0xa4f0a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1sb_0xa590a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 8;
@@ -7418,7 +7465,8 @@ static inline void yasve_ldnf1sb_0xa590a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldnf1sb_0xa5b0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 8;
@@ -7428,7 +7476,8 @@ static inline void yasve_ldnf1sb_0xa5b0a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldnf1sb_0xa5d0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (16-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 8;
@@ -7438,7 +7487,8 @@ static inline void yasve_ldnf1sb_0xa5d0a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldnf1sh_0xa510a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 16;
@@ -7448,7 +7498,8 @@ static inline void yasve_ldnf1sh_0xa510a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldnf1sh_0xa530a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 16;
@@ -7457,7 +7508,8 @@ static inline void yasve_ldnf1sh_0xa530a000 (CTXARG, int Zt, int Pg, svemo_t mo,
     perform_LDNF(zx, esize, msize, unsignedp, Zt, Rn, offset, Pg);
 }
 static inline void yasve_ldnf1sw_0xa490a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -7467,7 +7519,8 @@ static inline void yasve_ldnf1sw_0xa490a000 (CTXARG, int Zt, int Pg, svemo_t mo,
 }
 static inline void yasve_ldnf1w_0xa550a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 32;
@@ -7477,7 +7530,8 @@ static inline void yasve_ldnf1w_0xa550a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnf1w_0xa570a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -7488,16 +7542,17 @@ static inline void yasve_ldnf1w_0xa570a000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_ldnt1b_0xa400c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int msize = 8;
     perform_LDNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ldnt1b_0xa400e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     int msize = 8;
@@ -7506,16 +7561,17 @@ static inline void yasve_ldnt1b_0xa400e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnt1d_0xa580c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, LSL=3) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int msize = 64;
     perform_LDNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ldnt1d_0xa580e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 64;
@@ -7524,16 +7580,17 @@ static inline void yasve_ldnt1d_0xa580e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnt1h_0xa480c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, LSL=1) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int msize = 16;
     perform_LDNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ldnt1h_0xa480e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 16;
@@ -7542,16 +7599,17 @@ static inline void yasve_ldnt1h_0xa480e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 static inline void yasve_ldnt1w_0xa500c000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, LSL=2) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int msize = 32;
     perform_LDNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_ldnt1w_0xa500e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, LSL=0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 32;
@@ -7560,15 +7618,15 @@ static inline void yasve_ldnt1w_0xa500e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 
 static inline void yasve_ldr_0x85800000 (CTXARG, int Pt, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* operand: SVE_ADDR_RI_S9xVL */
+    /* operand: SVE_ADDR_RI_S9xVL=(Rn, opr_simm9, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     perform_LDR_p(zx, Pt, Rn, imm);
 }
 static inline void yasve_ldr_0x85804000 (CTXARG, int Zt, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* operand: SVE_ADDR_RI_S9xVL */
+    /* operand: SVE_ADDR_RI_S9xVL=(Rn, opr_simm9, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     perform_LDR_z(zx, Zt, Rn, imm);
 }
 
@@ -8356,27 +8414,27 @@ static inline void yasve_sqsub_0x2526c000 (TBDARG) {
 
 static inline void yasve_st1b_0xe4004000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/8-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int msize = 8;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1b_0xe400e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/8-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 8;
     int msize = 8;
     perform_ST1_x_imm(zx, esize, msize, Zt, Rn, imm, Pg);
 }
-static inline void yasve_st1b_0xe4008000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_st1b_0xe4008000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* operand: SVE_ADDR_RZ_XTW_14=(Zm/32, Rn, opr_xs14, LSL=0) */
+    /* operand: SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 64;
     int msize = 8;
     int offs_size = 32;
@@ -8386,11 +8444,11 @@ static inline void yasve_st1b_0xe4008000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_st1b_0xe400a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_st1b_0xe400a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* oprand: SVE_ADDR_RZ=(Zm_16/64, Rn, opr_xs22, LSL=0) */
+    /* operand: SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 8;
     int offs_size = 64;
@@ -8402,9 +8460,9 @@ static inline void yasve_st1b_0xe400a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1b_0xe440a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int xs, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* oprand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 8;
     s64 offset = imm;
@@ -8412,45 +8470,45 @@ static inline void yasve_st1b_0xe440a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1b_0xe4604000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 64;
     int msize = 8;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1b_0xe460e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 64;
     int msize = 8;
     perform_ST1_x_imm(zx, esize, msize, Zt, Rn, imm, Pg);
 }
 static inline void yasve_st1b_0xe4204000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 16;
     int msize = 8;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1b_0xe420e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/16-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 16;
     int msize = 8;
     perform_ST1_x_imm(zx, esize, msize, Zt, Rn, imm, Pg);
 }
-static inline void yasve_st1b_0xe4408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int xs, int _1) {
+static inline void yasve_st1b_0xe4408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* operand: SVE_ADDR_RZ_XTW_14=(Zm/32, Rn, opr_xs14, LSL=0) */
+    /* operand: SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 32;
     int msize = 8;
     int offs_size = 32;
@@ -8462,9 +8520,9 @@ static inline void yasve_st1b_0xe4408000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1b_0xe460a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* oprand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    /* operand: SVE_ADDR_ZI_U5=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 8;
     s64 offset = imm;
@@ -8472,18 +8530,18 @@ static inline void yasve_st1b_0xe460a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1b_0xe4404000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* oprand: SVE_ADDR_RX=(Rn, Rm, 0, 0) */
+    /* operand: SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 32;
     int msize = 8;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1b_0xe440e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* oprand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    /* operand: SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     int esize = 32;
     int msize = 8;
     perform_ST1_x_imm(zx, esize, msize, Zt, Rn, imm, Pg);
@@ -8491,9 +8549,9 @@ static inline void yasve_st1b_0xe440e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st1d_0xe5808000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_14 */
+    /* SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 64;
     int msize = 64;
     int offs_size = 32;
@@ -8503,11 +8561,11 @@ static inline void yasve_st1d_0xe5808000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 		    offs_size, offs_unsignedp, scale,
 		    Zt, Rn, Zm, Pg);
 }
-static inline void yasve_st1d_0xe580a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zm, int Rn, int _0, int _1) {
+static inline void yasve_st1d_0xe580a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     //NOTTESTED21();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 64;
     int offs_size = 64;
@@ -8519,9 +8577,9 @@ static inline void yasve_st1d_0xe580a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1d_0xe5a08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW3_14 */
+    /* SVE_ADDR_RZ_XTW3_14=(Rn, Zm/32, opr_xs14, LSL=3) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL3);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL3);
     int esize = 64;
     int msize = 64;
     int offs_size = 32;
@@ -8533,9 +8591,9 @@ static inline void yasve_st1d_0xe5a08000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1d_0xe5a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL3 */
+    /* SVE_ADDR_RZ_LSL3=(Rn, Zm/64, opr_xs22, LSL=3) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL3);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL3);
     int esize = 64;
     int msize = 64;
     int offs_size = 64;
@@ -8547,18 +8605,18 @@ static inline void yasve_st1d_0xe5a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1d_0xe5e04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     //NOTTESTED00();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int msize = 64;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1d_0xe5c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate) */
-    /* SVE_ADDR_ZI_U5x8 */
+    /* SVE_ADDR_ZI_U5x8=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 64;
     s64 offset = imm;
@@ -8566,7 +8624,8 @@ static inline void yasve_st1d_0xe5c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1d_0xe5e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     //NOTTESTED18();
     int esize = 64;
     int msize = 64;
@@ -8576,9 +8635,9 @@ static inline void yasve_st1d_0xe5e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st1h_0xe4808000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_14 */
+    /* SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 64;
     int msize = 16;
     int offs_size = 32;
@@ -8590,9 +8649,9 @@ static inline void yasve_st1h_0xe4808000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe480a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 16;
     int offs_size = 64;
@@ -8604,18 +8663,18 @@ static inline void yasve_st1h_0xe480a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4a04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/16-bit element) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     //NOTTESTED00();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int msize = 16;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1h_0xe4a08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_14 */
+    /* SVE_ADDR_RZ_XTW1_14=(Rn, Zm/32, opr_xs14, LSL=1) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL1);
     int esize = 64;
     int msize = 16;
     int offs_size = 32;
@@ -8627,9 +8686,9 @@ static inline void yasve_st1h_0xe4a08000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL1 */
+    /* SVE_ADDR_RZ_LSL1=(Rn, Zm/64, opr_xs22, LSL=1) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL1);
     int esize = 64;
     int msize = 16;
     int offs_size = 64;
@@ -8641,18 +8700,18 @@ static inline void yasve_st1h_0xe4a0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4c04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 32;
     int msize = 16;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1h_0xe4c08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_14 */
+    /* SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -8664,18 +8723,18 @@ static inline void yasve_st1h_0xe4c08000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4e04000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 64;
     int msize = 16;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1h_0xe4e08000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW1_14 */
+    /* SVE_ADDR_RZ_XTW1_14=(Rn, Zm/32, opr_xs14, LSL=1) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL1);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL1);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -8687,7 +8746,8 @@ static inline void yasve_st1h_0xe4e08000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/16-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     int msize = 16;
@@ -8696,9 +8756,9 @@ static inline void yasve_st1h_0xe4a0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 16;
     s64 offset = imm;
@@ -8706,7 +8766,8 @@ static inline void yasve_st1h_0xe4c0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 16;
@@ -8715,9 +8776,9 @@ static inline void yasve_st1h_0xe4c0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x2 */
+    /* SVE_ADDR_ZI_U5x2=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 16;
     s64 offset = imm;
@@ -8725,7 +8786,8 @@ static inline void yasve_st1h_0xe4e0a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1h_0xe4e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 16;
@@ -8734,9 +8796,9 @@ static inline void yasve_st1h_0xe4e0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st1w_0xe5008000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_14 */
+    /* SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 64;
     int msize = 32;
     int offs_size = 32;
@@ -8748,9 +8810,9 @@ static inline void yasve_st1w_0xe5008000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe500a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int _1) {
     /* (scalar plus vector/64-bit unscaled offset) */
-    /* SVE_ADDR_RZ */
+    /* SVE_ADDR_RZ=(Rn, Zm/64, opr_xs22, LSL=0) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL0);
     int esize = 64;
     int msize = 32;
     int offs_size = 64;
@@ -8762,9 +8824,9 @@ static inline void yasve_st1w_0xe500a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe5208000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unpacked scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_14 */
+    /* SVE_ADDR_RZ_XTW2_14=(Rn, Zm/32, opr_xs14, LSL=2) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL2);
     int esize = 64;
     int msize = 32;
     int offs_size = 32;
@@ -8776,9 +8838,9 @@ static inline void yasve_st1w_0xe5208000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe520a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int _0, int _1) {
     /* (scalar plus vector/64-bit scaled offset) */
-    /* SVE_ADDR_RZ_LSL2 */
+    /* SVE_ADDR_RZ_LSL2=(Rn, Zm/64, opr_xs22, LSL=2) */
+    assert(mo == OPR_Rn_Zm64_XS22_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z64_REG_XS22_LSL2);
     int esize = 64;
     int msize = 32;
     int offs_size = 64;
@@ -8790,18 +8852,18 @@ static inline void yasve_st1w_0xe520a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe5404000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/32-bit element) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     //NOTTESTED00();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int msize = 32;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1w_0xe5408000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit unscaled offset) */
-    /* SVE_ADDR_RZ_XTW_14 */
+    /* SVE_ADDR_RZ_XTW_14=(Rn, Zm/32, opr_xs14, LSL=0) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL0);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL0);
     int esize = 32;
     int msize = 32;
     int offs_size = 32;
@@ -8813,18 +8875,18 @@ static inline void yasve_st1w_0xe5408000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe5604000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar/64-bit element) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 64;
     int msize = 32;
     perform_ST1_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st1w_0xe5608000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Zm, int xs, int _1) {
     /* (scalar plus vector/32-bit scaled offset) */
-    /* SVE_ADDR_RZ_XTW2_14 */
+    /* SVE_ADDR_RZ_XTW2_14=(Rn, Zm/32, opr_xs14, LSL=2) */
+    assert(mo == OPR_Rn_Zm32_XS14_LSL2);
     NOTTESTED();
-    assert(mo == OPR_Z32_REG_XS14_LSL2);
     int esize = 32;
     int msize = 16;
     int offs_size = 32;
@@ -8836,9 +8898,9 @@ static inline void yasve_st1w_0xe5608000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe540a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate/64-bit element) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 64;
     int msize = 32;
     s64 offset = imm;
@@ -8846,7 +8908,8 @@ static inline void yasve_st1w_0xe540a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe540e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/32-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     int msize = 32;
@@ -8855,9 +8918,9 @@ static inline void yasve_st1w_0xe540e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe560a000 (CTXARG, int Zt, int Pg, svemo_t mo, int Zn, s64 imm, int _0, int _1) {
     /* (vector plus immediate/32-bit element) */
-    /* SVE_ADDR_ZI_U5x4 */
+    /* SVE_ADDR_ZI_U5x4=(Zn, opr_uimm5, 0, 0) */
+    assert(mo == OPR_ZnSS_IMM);
     NOTTESTED();
-    assert(mo == OPR_ZSV_IMM);
     int esize = 32;
     int msize = 32;
     s64 offset = imm;
@@ -8865,7 +8928,8 @@ static inline void yasve_st1w_0xe560a000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 }
 static inline void yasve_st1w_0xe560e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate/64-bit element) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     int msize = 32;
@@ -8875,16 +8939,17 @@ static inline void yasve_st1w_0xe560e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st2b_0xe4206000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int nreg = 2;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st2b_0xe430e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     s64 offset = imm;
@@ -8894,16 +8959,17 @@ static inline void yasve_st2b_0xe430e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st2d_0xe5a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int nreg = 2;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st2d_0xe5b0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL*/
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     s64 offset = imm;
@@ -8913,16 +8979,17 @@ static inline void yasve_st2d_0xe5b0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st2h_0xe4a06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
+    assert(mo == OPR_Rn_Rm_LSL1);
     int esize = 16;
     int nreg = 2;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st2h_0xe4b0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     s64 offset = imm;
@@ -8932,16 +8999,17 @@ static inline void yasve_st2h_0xe4b0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st2w_0xe5206000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int nreg = 2;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st2w_0xe530e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x2xVL */
+    /* SVE_ADDR_RI_S4x2xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     s64 offset = imm;
@@ -8951,16 +9019,17 @@ static inline void yasve_st2w_0xe530e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st3b_0xe4406000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int nreg = 3;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st3b_0xe450e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     s64 offset = imm;
@@ -8970,16 +9039,17 @@ static inline void yasve_st3b_0xe450e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st3d_0xe5c06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int nreg = 3;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st3d_0xe5d0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     s64 offset = imm;
@@ -8989,16 +9059,17 @@ static inline void yasve_st3d_0xe5d0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st3h_0xe4c06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int nreg = 3;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st3h_0xe4d0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     s64 offset = imm;
@@ -9008,16 +9079,17 @@ static inline void yasve_st3h_0xe4d0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st3w_0xe5406000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int nreg = 3;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st3w_0xe550e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x3xVL */
+    /* SVE_ADDR_RI_S4x3xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     s64 offset = imm;
@@ -9027,16 +9099,17 @@ static inline void yasve_st3w_0xe550e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st4b_0xe4606000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int nreg = 4;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st4b_0xe470e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     s64 offset = imm;
@@ -9046,16 +9119,17 @@ static inline void yasve_st4b_0xe470e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st4d_0xe5e06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int nreg = 4;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st4d_0xe5f0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     s64 offset = imm;
@@ -9065,16 +9139,17 @@ static inline void yasve_st4d_0xe5f0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st4h_0xe4e06000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int nreg = 4;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st4h_0xe4f0e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     s64 offset = imm;
@@ -9084,16 +9159,17 @@ static inline void yasve_st4h_0xe4f0e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_st4w_0xe5606000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int nreg = 4;
     perform_ST234_x_x(zx, esize, nreg, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_st4w_0xe570e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4x4xVL */
+    /* SVE_ADDR_RI_S4x4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     s64 offset = imm;
@@ -9103,16 +9179,17 @@ static inline void yasve_st4w_0xe570e000 (CTXARG, int Zt, int Pg, svemo_t mo, in
 
 static inline void yasve_stnt1b_0xe4006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX */
+    /* SVE_ADDR_RX=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL0);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL0);
     int esize = 8;
     int msize = 8;
     perform_STNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_stnt1b_0xe410e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 8;
     s64 offset = imm;
@@ -9121,16 +9198,17 @@ static inline void yasve_stnt1b_0xe410e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_stnt1d_0xe5806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL3 */
+    /* SVE_ADDR_RX_LSL3=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL3);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL3);
     int esize = 64;
     int msize = 64;
     perform_STNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_stnt1d_0xe590e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 64;
     s64 offset = imm;
@@ -9139,16 +9217,17 @@ static inline void yasve_stnt1d_0xe590e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_stnt1h_0xe4806000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL1 */
+    /* SVE_ADDR_RX_LSL1=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL1);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL1);
     int esize = 16;
     int msize = 16;
     perform_STNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_stnt1h_0xe490e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 16;
     s64 offset = imm;
@@ -9157,16 +9236,17 @@ static inline void yasve_stnt1h_0xe490e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 
 static inline void yasve_stnt1w_0xe5006000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, int Rm, int _0, int _1) {
     /* (scalar plus scalar) */
-    /* SVE_ADDR_RX_LSL2 */
+    /* SVE_ADDR_RX_LSL2=(Rn, Rm, 0, lsl) */
+    assert(mo == OPR_Rn_Rm_LSL2);
     NOTTESTED();
-    assert(mo == OPR_R64_REG_LSL2);
     int esize = 32;
     int msize = 32;
     perform_STNT_x_x(zx, esize, msize, Zt, Rn, Rm, Pg);
 }
 static inline void yasve_stnt1w_0xe510e000 (CTXARG, int Zt, int Pg, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
     /* (scalar plus immediate) */
-    /* SVE_ADDR_RI_S4xVL */
+    /* SVE_ADDR_RI_S4xVL=(Rn, opr_simm4, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
     int esize = 32;
     s64 offset = imm;
@@ -9174,15 +9254,15 @@ static inline void yasve_stnt1w_0xe510e000 (CTXARG, int Zt, int Pg, svemo_t mo, 
 }
 
 static inline void yasve_str_0xe5800000 (CTXARG, int Pt, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* operand: SVE_ADDR_RI_S9xVL */
+    /* operand: SVE_ADDR_RI_S9xVL=(Rn, opr_simm9, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     perform_STR_p(zx, Pt, Rn, imm);
 }
 static inline void yasve_str_0xe5804000 (CTXARG, int Zt, svemo_t mo, int Rn, s64 imm, int _0, int _1) {
-    /* operand: SVE_ADDR_RI_S9xVL */
+    /* operand: SVE_ADDR_RI_S9xVL=(Rn, opr_simm9, 0, 0) */
+    assert(mo == OPR_Rn_IMM);
     NOTTESTED();
-    assert(mo == OPR_R64_IMM);
     perform_STR_z(zx, Zt, Rn, imm);
 }
 

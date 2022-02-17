@@ -1,4 +1,4 @@
-# YASVE -- Yet Another ARM SVE Emulator
+# YASVE -- Yet Another ARM SVE Emulator (v2.1)
 
 Copyright (C) 2020-2022 RIKEN R-CCS
 

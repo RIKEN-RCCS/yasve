@@ -40,7 +40,7 @@ is uncontrollable.
 * [action.c](action.c): instuction definition
 * [insn.c](insn.c): a part of the instruciton table in binutils
 * [yasve.c](yasve.c): opcode dispatcher
-* [preloader.c](preloader.c): trap handler setting for static linked a.out
+* [preloader.c](preloader.c): trap handler setter for statically-linked a.out
 
 YASVE includes the instruction table "aarch64-tbl.h" taken from
 binutils-2_37.  YASVE uses an extracted file "insn.c" which consists

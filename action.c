@@ -1180,7 +1180,7 @@ CountLeadingSignBits(int esize, u64 x)
 typedef struct {u64 v; bool s;} saturated_t;
 
 /* Calculates a saturated sum of (x0 + y0) to the given bits-range for
- * signed x0, and y0 in a small range. */
+   signed x0 and y0 in a small range. */
 
 static saturated_t
 saturated_ssum(s64 x0, s64 y0, int bits)
@@ -1226,7 +1226,7 @@ saturated_ssum(s64 x0, s64 y0, int bits)
 }
 
 /* Calculates a saturated sum of (x0 + y0) to the given bits-range for
-   unsigned x0, and y0 in a small range. */
+   unsigned x0 and y0 in a small range. */
 
 static saturated_t
 saturated_usum(u64 x0, s64 y0, int bits)
